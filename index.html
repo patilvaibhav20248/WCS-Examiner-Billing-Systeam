@@ -11,7 +11,7 @@
         href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
         rel="stylesheet">
     <link rel="icon" type="image/webp" href="college-logo.webp">
-    <link rel="stylesheet" href="styles.css?v=43.0">
+    <link rel="stylesheet" href="styles.css?v=50.0">
 </head>
 
 <body style="word-wrap: break-word;">
@@ -233,7 +233,47 @@
             <div class="nav-glow-runner"></div>
         </nav>
 
+        <!-- Modern Executive Sub-Bar: Live Session & Quick Stats -->
+        <header id="portal-executive-bar" class="portal-executive-bar no-print">
+            <div class="executive-bar-container">
+                <div class="bar-left">
+                    <span class="live-status-dot"></span>
+                    <span class="bar-session-title">Autonomous Examination Billing Portal</span>
+                    <span class="bar-divider">&bull;</span>
+                    <span class="bar-college">Willingdon College, Sangli</span>
+                </div>
+                <div class="bar-center">
+                    <div class="quick-stat-badge" onclick="scrollToPage('page1')" title="Click to view Course details on Sheet 1">
+                        <span class="stat-lbl">Course:</span>
+                        <strong id="bar-class-val">B.SC.IT &bull; Part I</strong>
+                    </div>
+                    <div class="quick-stat-badge" onclick="scrollToPage('page1')" title="Click to view Attendance summary on Sheet 1">
+                        <span class="stat-lbl">Attendance:</span>
+                        <strong id="bar-attendance-val">0 Present</strong>
+                    </div>
+                    <div class="quick-stat-badge stat-gold" onclick="scrollToPage('page8')" title="Click to view Final Bill on Sheet 8">
+                        <span class="stat-lbl">Grand Total:</span>
+                        <strong id="bar-total-val">₹0.00</strong>
+                    </div>
+                </div>
+                <div class="bar-right">
+                    <span class="jump-label">Jump to Sheet:</span>
+                    <select id="quick-sheet-jump" onchange="scrollToPage(this.value)" class="bar-sheet-select">
+                        <option value="page1">Sheet 1: Attendance</option>
+                        <option value="page2">Sheet 2: Lab Cert</option>
+                        <option value="page3">Sheet 3: Arrangement</option>
+                        <option value="page4">Sheet 4: Verification</option>
+                        <option value="page5">Sheet 5: Remun (Ext)</option>
+                        <option value="page6">Sheet 6: Remun (Int)</option>
+                        <option value="page7">Sheet 7: Staff &amp; Assistants</option>
+                        <option value="page8">Sheet 8: Final Bill &amp; TA/DA</option>
+                    </select>
+                </div>
+            </div>
+        </header>
+
         <div class="page" id="page1">
+            <div class="sheet-corner-tag no-print"><span class="sheet-tag-pill">Sheet 1 of 8</span> Candidate Attendance &amp; Batch Report</div>
 
 
 
@@ -584,6 +624,7 @@
 
         </div>
         <div class="page" id="page2">
+            <div class="sheet-corner-tag no-print"><span class="sheet-tag-pill">Sheet 2 of 8</span> Laboratory Inspection Certificate</div>
             <p class=MsoNormal align=center style='text-align:center'><b><span lang=EN-US
                         style='font-size:26.0pt'>Willingdon College, Sangli. </span></b></p>
 
@@ -711,6 +752,7 @@ line-height:115%'><span lang=EN-US>&nbsp;</span></p>
 
         </div>
         <div class="page" id="page3">
+            <div class="sheet-corner-tag no-print"><span class="sheet-tag-pill">Sheet 3 of 8</span> Laboratory Arrangement &amp; Schedule</div>
             <p class=MsoNormal align=center style='text-align:center'><b><span lang=EN-US
                         style='font-size:26.0pt'>Willingdon College, Sangli. </span></b></p>
 
@@ -812,6 +854,7 @@ line-height:115%'><span lang=EN-US>&nbsp;</span></p>
 
         </div>
         <div class="page" id="page4">
+            <div class="sheet-corner-tag no-print"><span class="sheet-tag-pill">Sheet 4 of 8</span> Verification of Marks Certificate</div>
             <div style="position: relative;">
                 <p class="MsoNormal" style="text-align: right; margin-bottom: 20px;">
                     <span lang="EN-US" style="font-size: 10.0pt;">Exam. Pract. : 4</span>
@@ -934,6 +977,7 @@ line-height:115%'><span lang=EN-US>&nbsp;</span></p>
             </div>
         </div>
         <div class="page" id="page5">
+            <div class="sheet-corner-tag no-print"><span class="sheet-tag-pill">Sheet 5 of 8</span> External Examiner Remuneration Bill</div>
             <div style="text-align: center; margin-bottom: 6px;">
                 <h2 style="margin: 0; font-size: 15pt;">Willingdon College, Sangli (Autonomous)</h2>
                 <h3 style="margin: 2px 0 0 0; font-size: 11.5pt;">REMUNERATION BILL FORM (EXTERNAL/INTERNAL)</h3>
@@ -1238,6 +1282,7 @@ line-height:115%'><span lang=EN-US>&nbsp;</span></p>
             </table>
         </div>
         <div class="page" id="page6">
+            <div class="sheet-corner-tag no-print"><span class="sheet-tag-pill">Sheet 6 of 8</span> Internal Examiner Remuneration Bill</div>
             <div style="text-align: center; margin-bottom: 6px;">
                 <h2 style="margin: 0; font-size: 15pt;">Willingdon College, Sangli (Autonomous)</h2>
                 <h3 style="margin: 2px 0 0 0; font-size: 11.5pt;">REMUNERATION BILL FORM (EXTERNAL/INTERNAL)</h3>
@@ -1543,6 +1588,7 @@ line-height:115%'><span lang=EN-US>&nbsp;</span></p>
         </div>
 
         <div class="page landscape" id="page7">
+            <div class="sheet-corner-tag no-print"><span class="sheet-tag-pill">Sheet 7 of 8 &bull; Landscape</span> Staff &amp; Laboratory Assistants Remuneration</div>
             <!-- Landscape Action Bar for Page 7 (Hidden when printing) -->
             <div class="no-print"
                 style="display: flex; justify-content: space-between; align-items: center; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; padding: 6px 14px; margin-bottom: 12px;">
@@ -2045,6 +2091,7 @@ line-height:115%'><span lang=EN-US>&nbsp;</span></p>
         </div>
 
         <div class="page landscape" id="page8">
+            <div class="sheet-corner-tag no-print"><span class="sheet-tag-pill">Sheet 8 of 8 &bull; Landscape</span> Final Consolidated Examination Bill &amp; TA/DA</div>
             <!-- Landscape Action Bar for Page 8 (Hidden when printing) -->
             <div class="no-print"
                 style="display: flex; justify-content: space-between; align-items: center; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; padding: 6px 14px; margin-bottom: 12px;">
@@ -2830,6 +2877,26 @@ line-height:115%'><span lang=EN-US>&nbsp;</span></p>
             </div>
         </div>
 
+        <!-- Floating Quick Navigation Dock -->
+        <div id="portal-floating-dock" class="portal-floating-dock no-print">
+            <div class="dock-jump-pills">
+                <button type="button" class="dock-pill active" onclick="scrollToPage('page1')" title="Sheet 1: Attendance">1</button>
+                <button type="button" class="dock-pill" onclick="scrollToPage('page2')" title="Sheet 2: Lab Cert">2</button>
+                <button type="button" class="dock-pill" onclick="scrollToPage('page3')" title="Sheet 3: Arrangement">3</button>
+                <button type="button" class="dock-pill" onclick="scrollToPage('page4')" title="Sheet 4: Verification">4</button>
+                <button type="button" class="dock-pill" onclick="scrollToPage('page5')" title="Sheet 5: Remun (Ext)">5</button>
+                <button type="button" class="dock-pill" onclick="scrollToPage('page6')" title="Sheet 6: Remun (Int)">6</button>
+                <button type="button" class="dock-pill" onclick="scrollToPage('page7')" title="Sheet 7: Staff &amp; Assistants">7</button>
+                <button type="button" class="dock-pill" onclick="scrollToPage('page8')" title="Sheet 8: Final Bill">8</button>
+            </div>
+            <div class="dock-divider"></div>
+            <button type="button" class="dock-action-btn dock-btn-save" onclick="saveAllBillDataManually()" title="Save All Data (Ctrl+S)">
+                <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            </button>
+            <button type="button" class="dock-action-btn dock-btn-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Scroll to Top">
+                <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+            </button>
+        </div>
     </div><!-- /#app-container -->
 
     <script src="jspdf.umd.min.js"></script>
@@ -2837,7 +2904,7 @@ line-height:115%'><span lang=EN-US>&nbsp;</span></p>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script>if (typeof XLSX === 'undefined') { document.write('<script src="xlsx.full.min.js"><\/script>'); }</script>
     <script src="login-3d.js?v=25.0"></script>
-    <script src="script.js?v=25.0"></script>
+    <script src="script.js?v=50.0"></script>
 </body>
 
 </html>

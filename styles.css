@@ -2923,3 +2923,421 @@ body.pdf-export-mode input[type="time"]::-webkit-calendar-picker-indicator {
         display: none !important;
     }
 }
+
+
+/* ============================================================ */
+/* MODERN EXECUTIVE INSIDE PORTAL UI                           */
+/* ============================================================ */
+
+body.logged-in {
+    background: #f8fafc radial-gradient(ellipse 100% 50% at 50% 0%, #e2e8f0 0%, #f1f5f9 60%, #f8fafc 100%) !important;
+    background-attachment: fixed !important;
+    color: #0f172a !important;
+    font-family: var(--font-doc);
+    padding: 0 0 80px 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 0 !important;
+}
+
+#app-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+/* Navbar Margin Adjustment when Executive Bar is Present */
+.top-navbar {
+    margin-bottom: 0 !important;
+    background: rgba(15, 23, 42, 0.95) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25) !important;
+}
+
+/* Executive Sub-Bar: Live Session & Quick Stats */
+.portal-executive-bar {
+    width: 100%;
+    position: sticky;
+    top: 62px;
+    z-index: 9990;
+    background: rgba(30, 41, 59, 0.92);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.2);
+    padding: 8px 24px;
+    box-sizing: border-box;
+    margin-bottom: 30px;
+    font-family: var(--font-ui) !important;
+}
+
+.executive-bar-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.bar-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.82rem;
+    color: #e2e8f0;
+}
+
+.live-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #10b981;
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+    animation: livePulse 2s infinite cubic-bezier(0.66, 0, 0, 1);
+    flex-shrink: 0;
+}
+
+@keyframes livePulse {
+    0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+    70% { box-shadow: 0 0 0 7px rgba(16, 185, 129, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+.bar-session-title {
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.01em;
+}
+
+.bar-divider {
+    color: #64748b;
+}
+
+.bar-college {
+    color: #94a3b8;
+    font-weight: 500;
+}
+
+.bar-center {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.quick-stat-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 4px 10px;
+    font-size: 0.78rem;
+    color: #cbd5e1;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.quick-stat-badge:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(99, 102, 241, 0.4);
+    transform: translateY(-1px);
+}
+
+.quick-stat-badge .stat-lbl {
+    color: #94a3b8;
+    font-weight: 500;
+}
+
+.quick-stat-badge strong {
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.quick-stat-badge.stat-gold {
+    background: rgba(245, 158, 11, 0.12);
+    border-color: rgba(245, 158, 11, 0.3);
+}
+
+.quick-stat-badge.stat-gold strong {
+    color: #fbbf24;
+}
+
+.bar-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.jump-label {
+    font-size: 0.76rem;
+    color: #94a3b8;
+    font-weight: 600;
+}
+
+.bar-sheet-select {
+    background: #0f172a;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #f1f5f9;
+    font-family: var(--font-ui);
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.bar-sheet-select:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3);
+}
+
+/* Modern Document Elevation & Paper Card Styling */
+.page {
+    border-radius: 8px !important;
+    box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(15, 23, 42, 0.05) !important;
+    position: relative !important;
+    margin: 0 auto 35px auto !important;
+    transition: box-shadow 0.25s ease, transform 0.25s ease !important;
+}
+
+.page:hover {
+    box-shadow: 0 16px 40px -8px rgba(15, 23, 42, 0.14), 0 0 0 1px rgba(15, 23, 42, 0.08) !important;
+}
+
+/* Modern Sheet Corner Tag */
+.sheet-corner-tag {
+    position: absolute;
+    top: -14px;
+    right: 20px;
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    color: #e2e8f0;
+    font-family: var(--font-ui);
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 3px 12px;
+    border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    z-index: 10;
+    letter-spacing: 0.01em;
+}
+
+.sheet-tag-pill {
+    background: linear-gradient(135deg, #2563eb, #4f46e5);
+    color: #ffffff;
+    font-size: 0.68rem;
+    font-weight: 800;
+    padding: 1px 7px;
+    border-radius: 9999px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+/* Interactive Input Styling (Web View Only) */
+input[type="text"]:not(.raw-print),
+input[type="number"]:not(.raw-print) {
+    border: 1px solid #d1d5db;
+    background: #fbfcfe;
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-family: inherit;
+    font-size: inherit;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+input[type="text"]:hover,
+input[type="number"]:hover {
+    border-color: #94a3b8;
+    background: #ffffff;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus,
+select:focus {
+    outline: none !important;
+    border-color: #2563eb !important;
+    background: #ffffff !important;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18) !important;
+}
+
+/* Floating Quick Navigation Dock */
+.portal-floating-dock {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 9998;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(15, 23, 42, 0.92);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 9999px;
+    padding: 6px 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    font-family: var(--font-ui);
+    user-select: none;
+    transition: all 0.25s ease;
+}
+
+.portal-floating-dock:hover {
+    border-color: rgba(99, 102, 241, 0.45);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
+}
+
+.dock-jump-pills {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.dock-pill {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #cbd5e1;
+    font-size: 0.74rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.18s ease;
+}
+
+.dock-pill:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+.dock-pill.active {
+    background: linear-gradient(135deg, #2563eb, #4f46e5);
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.5);
+}
+
+.dock-divider {
+    width: 1px;
+    height: 18px;
+    background: rgba(255, 255, 255, 0.15);
+    margin: 0 2px;
+}
+
+.dock-action-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.dock-action-btn:hover {
+    background: #2563eb;
+    border-color: #3b82f6;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+}
+
+.dock-btn-save:hover {
+    background: #059669 !important;
+    border-color: #10b981 !important;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4) !important;
+}
+
+/* ======================================================== */
+/* 100% AUTHENTIC PRINT & PDF EXPORT OVERRIDES              */
+/* ======================================================== */
+
+body.pdf-export-mode .portal-executive-bar,
+body.pdf-export-mode .portal-floating-dock,
+body.pdf-export-mode .sheet-corner-tag,
+body.pdf-export-mode .top-navbar,
+body.pdf-export-mode #scroll-to-top-btn {
+    display: none !important;
+}
+
+body.pdf-export-mode .page {
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+}
+
+body.pdf-export-mode input[type="text"],
+body.pdf-export-mode input[type="number"],
+body.pdf-export-mode input[type="date"],
+body.pdf-export-mode select {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+}
+
+@media print {
+    .portal-executive-bar,
+    .portal-floating-dock,
+    .sheet-corner-tag,
+    .top-navbar,
+    #scroll-to-top-btn {
+        display: none !important;
+    }
+
+    .page {
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        margin: 0 !important;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="date"],
+    select {
+        border: none !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+    }
+}
+
+@media (max-width: 1024px) {
+    .portal-executive-bar {
+        top: 0;
+        padding: 8px 12px;
+    }
+    .executive-bar-container {
+        justify-content: center;
+        gap: 10px;
+    }
+    .portal-floating-dock {
+        bottom: 12px;
+        right: 12px;
+        transform: scale(0.9);
+        transform-origin: bottom right;
+    }
+}

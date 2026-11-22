@@ -4207,6 +4207,57 @@ document.addEventListener('DOMContentLoaded', () => {
     window.handleDownloadPdf = handleDownloadPdf;
     window.startPdfDownload = startPdfDownload;
     window.downloadPage8Excel = downloadPage8Excel;
+    window.scrollToPage = (pageId) => {
+        if (!pageId) return;
+        if (pageId.startsWith('#')) pageId = pageId.substring(1);
+        const target = document.getElementById(pageId);
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            const jumpSelect = document.getElementById('quick-sheet-jump');
+            if (jumpSelect) jumpSelect.value = pageId;
+            const navTabs = document.querySelectorAll('.nav-tab');
+            navTabs.forEach(t => {
+                if (t.getAttribute('href') === `#${pageId}`) {
+                    navTabs.forEach(x => x.classList.remove('active'));
+                    t.classList.add('active');
+                }
+            });
+            const dockPills = document.querySelectorAll('.dock-pill');
+            const pageIndex = ['page1','page2','page3','page4','page5','page6','page7','page8'].indexOf(pageId);
+            if (pageIndex >= 0 && dockPills[pageIndex]) {
+                dockPills.forEach(dp => dp.classList.remove('active'));
+                dockPills[pageIndex].classList.add('active');
+            }
+        }
+    };
+    window.updateExecutiveStats = () => {
+        try {
+            const courseEl = document.getElementById('course-dropdown');
+            const partEl = document.getElementById('part-dropdown');
+            const barClass = document.getElementById('bar-class-val');
+            if (barClass && courseEl) {
+                const cVal = courseEl.value || 'B.SC.IT';
+                const pVal = partEl ? partEl.value : 'Part - I';
+                barClass.textContent = `${cVal} \u2022 ${pVal}`;
+            }
+
+            const presentCountEl = document.getElementById('p1-total-present') || document.querySelector('.page4-total-present');
+            const barAtt = document.getElementById('bar-attendance-val');
+            if (barAtt) {
+                const val = (presentCountEl ? (presentCountEl.value || presentCountEl.textContent) : '0') || '0';
+                barAtt.textContent = `${val.trim()} Present`;
+            }
+
+            const totalEl = document.getElementById('final-grand-total') || document.getElementById('bill-grand-total');
+            const barTot = document.getElementById('bar-total-val');
+            if (barTot) {
+                const num = parseFloat(totalEl ? (totalEl.value || totalEl.textContent || 0) : 0) || 0;
+                barTot.textContent = `\u20B9${Math.round(num).toLocaleString('en-IN')}`;
+            }
+        } catch (e) {
+            console.error('Error updating executive stats:', e);
+        }
+    };
 
     // Staff Bank DB Global Exposes
     window.openStaffBankDbModal = openStaffBankDbModal;
@@ -4279,6 +4330,14 @@ document.addEventListener('DOMContentLoaded', () => {
                                 tab.classList.add('active');
                             }
                         });
+                        const jumpSelect = document.getElementById('quick-sheet-jump');
+                        if (jumpSelect) jumpSelect.value = pageId;
+                        const dockPills = document.querySelectorAll('.dock-pill');
+                        const pIdx = ['page1','page2','page3','page4','page5','page6','page7','page8'].indexOf(pageId);
+                        if (pIdx >= 0 && dockPills[pIdx]) {
+                            dockPills.forEach(dp => dp.classList.remove('active'));
+                            dockPills[pIdx].classList.add('active');
+                        }
                     }
                 });
             }, {
@@ -4322,11 +4381,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Listeners for live Executive stats
+    document.addEventListener('input', () => {
+        if (typeof window.updateExecutiveStats === 'function') window.updateExecutiveStats();
+    });
+    document.addEventListener('change', () => {
+        if (typeof window.updateExecutiveStats === 'function') window.updateExecutiveStats();
+    });
+
     setTimeout(() => {
         syncAllDisplays();
         updateTableTotals();
         updateStaffTotals();
         updatePage7Totals();
         updateTadaTotals();
+        if (typeof window.updateExecutiveStats === 'function') window.updateExecutiveStats();
     }, 100);
 });
