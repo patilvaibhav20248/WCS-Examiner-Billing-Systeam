@@ -1586,6 +1586,7 @@ input[type="time"]:focus {
     transform: scale(1.08);
 }
 
+.date-picker-trigger .page-date-input,
 .date-picker-trigger .page-date-sync-input {
     position: absolute !important;
     top: 0 !important;
@@ -1600,6 +1601,7 @@ input[type="time"]:focus {
     border: none !important;
 }
 
+.date-picker-trigger .page-date-input::-webkit-calendar-picker-indicator,
 .date-picker-trigger .page-date-sync-input::-webkit-calendar-picker-indicator {
     position: absolute;
     top: 0;
@@ -1610,6 +1612,7 @@ input[type="time"]:focus {
     cursor: pointer;
 }
 
+.page-date-input,
 .page-date-sync-input {
     cursor: pointer;
 }
@@ -1632,6 +1635,7 @@ input[type="time"]:focus {
 
 /* Print Rules for Dropdowns & Date Pickers */
 @media print {
+    .page-date-input,
     .page-date-sync-input,
     .date-picker-trigger,
     .staff-exam-date-picker,
@@ -2017,6 +2021,7 @@ body.pdf-export-mode .toast-message,
 body.pdf-export-mode .staff-exam-date-picker,
 body.pdf-export-mode .batch-date-picker,
 body.pdf-export-mode .no-print-date,
+body.pdf-export-mode .page-date-input,
 body.pdf-export-mode .page-date-sync-input,
 body.pdf-export-mode .date-picker-trigger,
 body.pdf-export-mode #batch-add-btn-container,
