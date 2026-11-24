@@ -2434,7 +2434,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const checkFormFilledStatus = () => {
         const requiredChecks = [
             { id: 'subject-input', label: 'Subject / Paper Name', pageId: 'page1' },
-            { id: 'date-input', label: 'Date of Examination', pageId: 'page1' },
             { id: 'p1-ext-name', label: 'External Examiner Name', pageId: 'page1' },
             { id: 'p1-int-name', label: 'Internal Examiner Name', pageId: 'page1' },
             { id: 'p1-ext-college', label: 'External College / Institute', pageId: 'page1' },
