@@ -179,23 +179,89 @@ document.addEventListener('DOMContentLoaded', () => {
         return str;
     };
 
+    let activeBillingDate = '2026-09-23';
+
+    const getActiveBillingDate = () => {
+        return activeBillingDate || document.querySelector('.page-date-sync-input')?.value || '2026-09-23';
+    };
+
     const updateAllDateDisplays = (val) => {
+        if (!val) return;
+        activeBillingDate = val;
         const displayVal = formatDateForDisplay(val);
         const dateDisplays = document.querySelectorAll('.date-display');
         dateDisplays.forEach(display => {
             display.textContent = displayVal;
         });
 
-        // If val is YYYY-MM-DD, sync to date inputs
-        if (val && String(val).includes('-') && String(val).length === 10) {
-            const dateInputsToSync = document.querySelectorAll('#date-input, .page-date-sync-input, .tada-date-picker');
-            dateInputsToSync.forEach(inp => {
-                if (inp.value !== val && (!inp.value || inp.dataset.autoSynced === 'true')) {
-                    inp.value = val;
-                    inp.dataset.autoSynced = 'true';
-                }
-            });
+        // Sync to all page date inputs and tada pickers
+        const dateInputsToSync = document.querySelectorAll('#date-input, .page-date-sync-input, .tada-date-picker');
+        dateInputsToSync.forEach(inp => {
+            if (inp.value !== val) {
+                inp.value = val;
+            }
+        });
+
+        const mainDateInput = document.getElementById('date-input');
+        if (mainDateInput && mainDateInput.value !== val) {
+            mainDateInput.value = val;
         }
+
+        if (!isLoading && typeof saveAllData === 'function') {
+            saveAllData();
+        }
+    };
+
+    const setupPageDatePickers = () => {
+        const pageDateSyncInputs = document.querySelectorAll('.page-date-sync-input');
+        pageDateSyncInputs.forEach(inp => {
+            if (inp.dataset.hasPickerBound === 'true') return;
+            inp.dataset.hasPickerBound = 'true';
+
+            const onSyncDateChange = (e) => {
+                if (e.target.value) {
+                    updateAllDateDisplays(e.target.value);
+                }
+            };
+            inp.addEventListener('input', onSyncDateChange);
+            inp.addEventListener('change', onSyncDateChange);
+
+            // Directly invoke native calendar popup on click
+            const triggerPicker = () => {
+                try {
+                    if (typeof inp.showPicker === 'function') {
+                        inp.showPicker();
+                    } else {
+                        inp.focus();
+                    }
+                } catch (err) { }
+            };
+            inp.addEventListener('click', triggerPicker);
+
+            // Also make parent trigger clickable if clicked
+            const parent = inp.closest('.date-picker-trigger');
+            if (parent && !parent.dataset.hasTriggerClick) {
+                parent.dataset.hasTriggerClick = 'true';
+                parent.addEventListener('click', (e) => {
+                    if (e.target !== inp) {
+                        triggerPicker();
+                    }
+                });
+            }
+
+            // Also allow clicking adjacent .date-display to open the calendar
+            const container = inp.closest('p, span, div');
+            if (container) {
+                const dateDisp = container.querySelector('.date-display');
+                if (dateDisp && !dateDisp.dataset.hasClickToPick) {
+                    dateDisp.dataset.hasClickToPick = 'true';
+                    dateDisp.title = 'Click to change date via calendar';
+                    dateDisp.addEventListener('click', () => {
+                        triggerPicker();
+                    });
+                }
+            }
+        });
     };
 
     const mainDateInput = document.getElementById('date-input');
@@ -215,14 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    const pageDateSyncInputs = document.querySelectorAll('.page-date-sync-input');
-    pageDateSyncInputs.forEach(inp => {
-        const onSyncDateChange = (e) => {
-            updateAllDateDisplays(e.target.value);
-        };
-        inp.addEventListener('input', onSyncDateChange);
-        inp.addEventListener('change', onSyncDateChange);
-    });
+    setupPageDatePickers();
 
     const otherDateInputs = document.querySelectorAll('.date-input:not(#date-input)');
     otherDateInputs.forEach(input => {
@@ -1527,6 +1586,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = {
                 version: 3,
                 savedAt: new Date().toISOString(),
+                billing_date: getActiveBillingDate(),
                 by_id: {},
                 by_key: {}
             };
@@ -1739,6 +1799,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 updateSubjectDisplays(fallbackSubject);
             }
 
+            // Restore saved examination date across pages
+            const savedDate = data.billing_date || (data.by_id ? data.by_id['date-input'] : null);
+            if (savedDate) {
+                updateAllDateDisplays(savedDate);
+            }
+
             // Sync and recalculate all derived values
             syncAllDisplays();
             updateTableTotals();
@@ -1827,6 +1893,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.college-display').forEach(d => d.textContent = 'WILLINGDON COLLEGE SANGLI');
             document.querySelectorAll('.college2-display').forEach(d => d.textContent = 'WILLINGDON COLLEGE SANGLI');
 
+            activeBillingDate = '2026-09-23';
             const mainDate = document.getElementById('date-input');
             if (mainDate) mainDate.value = '2026-09-23';
             updateAllDateDisplays('2026-09-23');
@@ -1988,8 +2055,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (ti && !ti.value && ti !== document.activeElement) ti.value = extIfsc;
         }
 
-        const mainDate = document.getElementById('date-input');
-        const dateVal = mainDate ? mainDate.value : getVal('date-input');
+        const dateVal = getActiveBillingDate();
         updateAllDateDisplays(dateVal || '2026-09-23');
 
         const courseVal = document.getElementById('course-dropdown')?.value || '';
@@ -2510,7 +2576,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const getDefaultPdfFileName = () => {
         const examinerVal = (document.getElementById('p1-ext-name')?.value || document.getElementById('p1-int-name')?.value || '').trim().replace(/[^a-zA-Z0-9_-]/g, '_');
         const subjectVal = (document.getElementById('subject-input')?.value || 'BSc_IT').trim().replace(/[^a-zA-Z0-9_-]/g, '_');
-        const dateVal = (document.getElementById('date-input')?.value || new Date().toISOString().slice(0, 10)).trim().replace(/[^a-zA-Z0-9_-]/g, '_');
+        const dateVal = (getActiveBillingDate() || new Date().toISOString().slice(0, 10)).trim().replace(/[^a-zA-Z0-9_-]/g, '_');
         if (examinerVal) {
             return `Willingdon_College_${examinerVal}_${subjectVal}_Exam_Bill_${dateVal}`;
         }
@@ -2738,8 +2804,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             };
 
                             // 1. Ensure date display on Page 1 is visible with proper formatted text
-                            const mainDateEl = document.getElementById('date-input');
-                            const mainDateVal = mainDateEl ? (formatDateForDisplay(mainDateEl.value) || mainDateEl.value) : '';
+                            const mainDateVal = formatDateForDisplay(getActiveBillingDate());
                             clonedPage.querySelectorAll('.print-date-display').forEach(el => {
                                 el.style.display = 'inline';
                                 el.style.color = '#000000';
@@ -2751,6 +2816,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             const removeSelectors = [
                                 '.no-print',
                                 '.no-print-date',
+                                '.date-picker-trigger',
                                 '.page-date-sync-input',
                                 '.batch-date-picker',
                                 '.staff-exam-date-picker',
@@ -3012,6 +3078,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             return el.classList && (
                                 el.classList.contains('no-print') ||
                                 el.classList.contains('no-print-date') ||
+                                el.classList.contains('date-picker-trigger') ||
                                 el.classList.contains('page-date-sync-input') ||
                                 el.classList.contains('batch-date-picker') ||
                                 el.classList.contains('staff-exam-date-picker') ||
@@ -4389,6 +4456,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     setTimeout(() => {
+        setupPageDatePickers();
         syncAllDisplays();
         updateTableTotals();
         updateStaffTotals();
